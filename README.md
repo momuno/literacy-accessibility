@@ -10,7 +10,7 @@ This hackathon project's goal is to make existing digital material more accessib
 
 *****
  
-<img src="media/iguana-wiki-kids.png" width="600" align="right"/>
+<img src="media/iguana-wiki-kids.png" width="575" align="right"/>
 
 The user experience is designed to allow readers of any literacy level to interact with the same source material in a similar way.
 
