@@ -10,14 +10,23 @@ This hackathon project's goal is to make existing digital material more accessib
 
 *****
  
+<img src="media/iguana-wiki-kids.png" width="600" align="right"/>
 
-<img src="media/iguana-wiki.png" width="900" align="right"/>
-The user experience is designed to allow readers of any literacy level to interact with the same source material in a similar way -- no one is required to experience a distinctly different application to learn the material, and no one is required to ask for help or explain themselves via a chatbot. 
+The user experience is designed to allow readers of any literacy level to interact with the same source material in a similar way.
 
+No one is required to experience a distinctly different application to learn the material. And no one is required to ask for help or explain themselves. 
 
-Instead, each reader can enjoy their co-authored and customized reading material with a highly similar digital experience as others.
+Each reader can enjoy their co-authored and customized reading material with a highly similar digital experience as others.
+
+*****
+
+The work in this repository showcases the original hackathon project created in September 2024, before Claude Code was released.  It was the first time I ever explored or wrote a browser extenstion.  
+
+The code was built on existing knowledge I had at the time, depended on my subscription to Azure Open AI, hardcodes the prompt and grade level, and has other hacks to prove out my idea.
+
+For more examples of original output, please view [origional-hackathon-v1/wikipedia-pdfs](origional-hackathon-v1/wikipedia-pdfs).
+
 <br clear="all"/>
 
-![Iguana-Wiki Page])
-
-APM Research Lab article: .
+More recently I have worked with Claude to update the approach. Improvements include - 
+<br clear="all"/>
