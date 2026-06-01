@@ -22,7 +22,7 @@ Each reader can enjoy their co-authored and customized reading material with a h
 
 The work in this repository showcases the original hackathon project created in September 2024, before Claude Code was released.  It was the first time I ever explored or wrote a browser extension.  
 
-The project was built on existing knowledge and reused code I had access to at the time.  It also depended on my subscription to Azure Open AI, hardcodes the prompt and grade level, and has other hacks to prove out my idea. Because it was purely a poc for a hackathon, I paused the project. I hoped to one day come back to it so that my kids and others could use it.
+The project was built on existing knowledge and reused code I had access to at the time.  It also depended on my subscription to Azure Open AI, hardcodes the prompt and grade level, las load-time lag, and other hacks to prove out my idea. Because it was purely a poc for a hackathon, I paused the project. I hoped to one day come back to it so that my kids and others could use it.
 
 Recently I have worked with Claude to update the extenstion so it can be used more widely. Improvements include - 
 
