@@ -1,6 +1,6 @@
 # literacy-accessibility
 
-<a href="[Demo Video](https://youtu.be/8kxyViU7wAg)"><img src="media/AccessingLiteracyMain.png" width="600" align="left"/>
+<a href="https://youtu.be/8kxyViU7wAg"><img src="media/AccessingLiteracyMain.png" width="600" align="left"/></a>
 
 According to [APM Research Lab](https://www.apmresearchlab.org/10x-adult-literacy#:~:text=by%20EMILY%20SCHMIDT%20%7C%20March%2016%2C%202022&text=This%20means%20more%20than%20half,of%20a%20sixth%2Dgrade%20level), "*more than half of Americans between the ages of 16 and 74 (54%) read below the equivalent of a sixth-grade level.*" This information is based on a [2020 Gallup study](https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf), which finds that "*income is strongly related to literacy.*" 
 
