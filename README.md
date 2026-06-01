@@ -24,7 +24,7 @@ The work in this repository showcases the original hackathon project created in 
 
 The code was built on existing knowledge I had at the time, depended on my subscription to Azure Open AI, hardcodes the prompt and grade level, and has other hacks to prove out my idea.
 
-For more examples of original output, please view [origional-hackathon-v1/wikipedia-pdfs](origional-hackathon-v1/wikipedia-pdfs).
+For more examples of original output, please view [origional-hackathon-v1/wikipedia-pdfs](original-hackathon-v1/wikipedia-pdfs).
 
 <br clear="all"/>
 
