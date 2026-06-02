@@ -1,33 +1,48 @@
-# literacy-accessibility
+# Accessing Literacy
 
-<a href="https://youtu.be/8kxyViU7wAg"><img src="media/AccessingLiteracyMain.png" width="600" align="left"/></a>
+<a href="https://youtu.be/8kxyViU7wAg"><img src="media/AccessingLiteracyMain.png" width="500" align="right"/></a>
 
-According to [APM Research Lab](https://www.apmresearchlab.org/10x-adult-literacy#:~:text=by%20EMILY%20SCHMIDT%20%7C%20March%2016%2C%202022&text=This%20means%20more%20than%20half,of%20a%20sixth%2Dgrade%20level), "*more than half of Americans between the ages of 16 and 74 (54%) read below the equivalent of a sixth-grade level.*" This information is based on a [2020 Gallup study](https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf), which finds that "*income is strongly related to literacy.*" 
 
-While the internet provides an enormous amount of published digital content to those interested, if the material has not been written below a sixth grade reading level, how many US adults can actually access that information? A disadvantage exists.
+According to [APM Research Lab](https://www.apmresearchlab.org/10x-adult-literacy), "more than half of Americans between the ages of 16 and 74 read below the equivalent of a sixth-grade level." The same [research](https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf) connects this directly to income — literacy and economic opportunity are deeply linked.
 
-This hackathon project's goal is to make existing digital material more accessible to this population group and others, such as teachers.
+The internet holds an enormous amount of knowledge. But if that knowledge is written above a sixth-grade reading level, how much of it is actually accessible to the people who need it most?
 
-*****
- 
-<img src="media/iguana-wiki-kids.png" width="575" align="right"/>
+That question is what started this project.
 
-The user experience is designed to allow readers of any literacy level to interact with the same source material in a similar way.
+*The video to the right shows the original hackathon version.*
+<br clear="all"/>
 
-No one is required to experience a distinctly different application to learn the material. And no one is required to ask for help or explain themselves. 
+---
 
-Each reader can enjoy their co-authored and customized reading material with a highly similar digital experience as others.
+## A Hack Idea
+<img src="media/iguana-wiki-kids.png" width="500" align="right"/>
 
-*****
+I built the first version of this during an internal Microsoft hackathon in September 2024. I had never written a browser extension before. (Hello C/C++ developer here.)
 
-The work in this repository showcases the original hackathon project created in September 2024, before Claude Code was released.  It was the first time I ever explored or wrote a browser extension.  
+The experience I wanted was for any reader, regardless of literacy level, to interact with source material the same way as anyone else. I didn't want to open up a separate application for a custom learning experience. I wanted to go to the same web pages as any one else and have the customization I needed to happen right there. And all without having to explain myself or ask a chatbot for help. Wikipedia was simple, structured, and had enough varied content that a literacy extension might be of use.
 
-The project was built on existing knowledge and reused code I had access to at the time.  It also depended on my subscription to Azure Open AI, hardcodes the prompt and grade level, las load-time lag, and other hacks to prove out my idea. Because it was purely a poc for a hackathon, I paused the project. I hoped to one day come back to it so that my kids and others could use it.
+The reality of that proof of concept?  I got it to work.
 
-Recently I have worked with Claude to update the extenstion so it can be used more widely. Improvements include - 
-
-For more examples of original output, please view [origional-hackathon-v1/wikipedia-pdfs](original-hackathon-v1/wikipedia-pdfs).
+I built it based on resources I had on hand and concepts I had been recently exposed to. Yes, it depended on my Azure OpenAI subscription, there was noticeable lag, and the grade level was hardcoded. It was terrible — required running a local Python server. Who wants to spin up a local process just to use a browser extension? Nobody. But it was enough to show myself the idea could work and that I could do it.
 
 <br clear="all"/>
 
+---
 
+## Hello, Claude
+
+Recently I sat down with Claude to see if I could complete the hack idea.  Wouldn't it be great if the extension just *worked*--and I could share it with my busy mom friends who might find use for it with their kids?
+
+It runs entirely in the browser. It has caching, it has intetractive reading level settings, it has progressive processing. And the best part, the language model — Llama 3.2 3B — downloads once and runs locally via WebGPU, using [WebLLM](https://webllm.mlc.ai/). It's $FREE.99!!
+
+Places to improve? Yep. For one thing, it only works on English Wikipedia. But its functional to the point of getting it into the hands of others to try out, and maybe they can make it their own :)
+
+---
+
+## Try it
+
+→ **[literacy-extension/README.md](literacy-extension/README.md)** — setup instructions, customization guide, and architecture overview
+
+→ **[original-hackathon-v1/README.md](original-hackathon-v1/README.md)** — the original Python + FastAPI + Chrome extension proof of concept
+
+For examples of the original hackathon output, see [original-hackathon-v1/wikipedia-pdfs](original-hackathon-v1/wikipedia-pdfs).
