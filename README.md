@@ -45,6 +45,6 @@ Places to improve? Yep. For one thing, it only works on English Wikipedia. But i
 
 → **[literacy-extension/README.md](literacy-extension/README.md)** — setup instructions, customization guide, and architecture overview
 
-→ **[original-hackathon-v1/README.md](original-hackathon-v1/)** — the original Python + FastAPI + Chrome extension proof of concept
+→ **[original-hackathon-v1 code](original-hackathon-v1/)** — the original Python + FastAPI + Chrome extension proof of concept
 
 For examples of the original hackathon output, see [original-hackathon-v1/wikipedia-pdfs](original-hackathon-v1/wikipedia-pdfs).
