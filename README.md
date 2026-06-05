@@ -3,7 +3,7 @@
 <a href="https://youtu.be/8kxyViU7wAg"><img src="media/AccessingLiteracyMain.png" width="500" align="right"/></a>
 
 
-According to [APM Research Lab](https://www.apmresearchlab.org/10x-adult-literacy), "more than half of Americans between the ages of 16 and 74 read below the equivalent of a sixth-grade level." The same [research](https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf) connects this directly to income — literacy and economic opportunity are deeply linked.
+According to [APM Research Lab](https://www.apmresearchlab.org/10x-adult-literacy), "half of Americans between the ages of 16 and 74 — have low literacy skills." The same [research](https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf) connects this directly to income — literacy and economic opportunity are deeply linked.
 
 The internet holds an enormous amount of knowledge. But if that knowledge is written above a sixth-grade reading level, how much of it is actually accessible to the people who need it most?
 
