@@ -1,20 +1,18 @@
 # Accessing Literacy — Browser Extension
 
+<a href="https://youtu.be/GN1AAjfI3Ec"><img src="media/ReadingExtensionUpdate.png" width="500" align="right"/></a>
 A browser extension that rewrites English Wikipedia articles to your chosen reading level using an AI model running entirely in your browser. No server, no API keys, no data leaves your device.
+
+<br clear="all"/>
 
 ---
 
 ## Try it out
 
-### Requirements
-
-- **Chrome 113+** or **Edge 113+** with WebGPU support
-- A modern GPU (most dedicated and recent integrated GPUs work)
-- ~2.5 GB of free disk space for the AI model (downloads once, then cached)
-
 ### Step 1 — Download
 
-[Download accessing-literacy-extension.zip](https://github.com/momuno/literacy-accessibility/releases/latest/download/accessing-literacy-extension.zip) and **unzip** it to a folder on your computer.
+1. [Download accessing-literacy-extension.zip](https://github.com/momuno/literacy-accessibility/releases/latest/download/accessing-literacy-extension.zip) 
+2. **unzip** it to a folder on your computer.
 
 ### Step 2 — Install in Developer Mode
 
@@ -32,18 +30,25 @@ A browser extension that rewrites English Wikipedia articles to your chosen read
 
 ### Step 3 — Use it
 
-1. Navigate to any English Wikipedia article (e.g. [Photosynthesis](https://en.wikipedia.org/wiki/Photosynthesis))
-2. Click the **books icon** in your browser toolbar
-3. Select a reading level (3rd grade through 12th grade)
-4. Click **Apply**
-5. Click **Off** to toggle back to the original text
+1. Pin the Accessing Literacy extension to your toolbar.
+2. Navigate to any English Wikipedia article (e.g. [Photosynthesis](https://en.wikipedia.org/wiki/Photosynthesis))
+3. Click the **books icon** in your browser toolbar
+4. Select a reading level (K through High School)
+5. Click **Apply**
+6. Click **Off** to toggle back to the original text
 
-**First-run note:** The first time you click Apply, the AI model (~2.5 GB) downloads and caches in your browser. This is a one-time wait of a few minutes depending on your connection. After that, everything runs locally with no network calls.
+**First-run note:** The first time you go to a Wikipedia page, the AI model (~2.5 GB) downloads and caches in your browser. This is a one-time wait of a few minutes depending on your connection. After that, everything runs locally with no network calls.
 
 **Cache indicators:** A checkmark next to a grade level in the popup means a cached rewrite exists for that article — it loads instantly.
 
 ---
 
+### Requirements
+
+- **Chrome 113+** or **Edge 113+** with WebGPU support
+- A modern GPU (most dedicated and recent integrated GPUs work)
+- ~2.5 GB of free disk space for the AI model (downloads once, then cached)
+- 
 ## How it works
 
 Click the extension icon on any English Wikipedia page to open a popup. Select a reading level and hit Apply. The extension rewrites the article paragraph by paragraph, sentence by sentence, directly in your browser using a locally running language model (Llama 3.2 3B via [WebLLM](https://webllm.mlc.ai/)).
