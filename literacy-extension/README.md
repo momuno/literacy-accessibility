@@ -20,7 +20,7 @@ And it's free.
 
 **MAKE IT YOUR OWN!**
 
-To customize the extension, go [here](make-it-your-own) for developer setup and customization ideas.
+To customize the extension, go [here](#make-it-your-own) for developer setup and customization ideas.
 
 <br clear="all"/>
 
