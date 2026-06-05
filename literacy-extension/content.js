@@ -8,7 +8,7 @@ window.__alContentLoaded = true;
 
   // ── State ──────────────────────────────────────────────────────────────────
 
-  const PAGE_KEY = window.location.href;
+  const PAGE_KEY = window.location.href.split('#')[0];
 
   const paragraphs = Array.from(
     document.querySelectorAll("#mw-content-text p")
@@ -182,11 +182,14 @@ window.__alContentLoaded = true;
     return banner;
   }
 
+  let bannerHideTimer = null;
+
   function setBanner(text, autohide = false) {
+    if (bannerHideTimer) { clearTimeout(bannerHideTimer); bannerHideTimer = null; }
     const banner = getOrCreateBanner();
     banner.style.opacity = "1";
     banner.textContent = text;
-    if (autohide) setTimeout(() => { banner.style.opacity = "0"; }, 3000);
+    if (autohide) bannerHideTimer = setTimeout(() => { banner.style.opacity = "0"; }, 3000);
   }
 
   function removeBanner() {

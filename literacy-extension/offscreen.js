@@ -1,7 +1,7 @@
 // offscreen.js
 // Loads Llama 3.2 3B via WebLLM and processes paragraph rewrite requests.
 // Processes sentence by sentence to minimize GPU memory usage per inference.
-// Handles GPU device loss by reloading the engine and retrying.
+// Handles GPU device loss by signaling background.js to recycle this document.
 
 import * as webllm from "@mlc-ai/web-llm";
 
@@ -25,19 +25,15 @@ function loadModel() {
   return enginePromise;
 }
 
-// Force reload the engine — used after a GPU device loss
-async function reloadModel() {
-  enginePromise = null;
-  return loadModel();
-}
-
 function isDeviceLostError(err) {
   const msg = err?.message || String(err);
   return (
     msg.includes("Device was lost") ||
     msg.includes("DEVICE_HUNG") ||
+    msg.includes("DEVICE_REMOVED") ||
     msg.includes("already been disposed") ||
-    msg.includes("unmapped before mapping")
+    msg.includes("unmapped before mapping") ||
+    msg.includes("Model not loaded")
   );
 }
 
@@ -48,14 +44,14 @@ loadModel().then(() => {
   console.error("[offscreen] model failed to load:", err);
 });
 
-// ── Sentence splitter ─────────────────────────────────────────────────────
+// ── Sentence splitter ─────────────────────────────────────────────────────────
 
 function splitSentences(text) {
   const parts = text.split(/(?<=[.?!])\s+(?=[A-Z])/);
   return parts.map((p) => p.trim()).filter((p) => p.length > 0);
 }
 
-// ── Prompt ────────────────────────────────────────────────────────────────
+// ── Prompt ────────────────────────────────────────────────────────────────────
 
 function buildPrompt(sentence, gradeLevel) {
   return (
@@ -66,7 +62,7 @@ function buildPrompt(sentence, gradeLevel) {
   );
 }
 
-// ── Job queue ─────────────────────────────────────────────────────────────
+// ── Job queue ─────────────────────────────────────────────────────────────────
 // Ensures only one tab's paragraphs are processed at a time.
 // Multiple tabs queue up and are processed sequentially.
 
@@ -86,7 +82,7 @@ async function processNextJob() {
   processNextJob();
 }
 
-// ── Message handler ───────────────────────────────────────────────────────
+// ── Message handler ───────────────────────────────────────────────────────────
 
 async function checkCancelled(tabId, jobId) {
   try {
@@ -101,14 +97,34 @@ async function checkCancelled(tabId, jobId) {
   }
 }
 
-async function runRewrite({ paragraphs, gradeLevel, tabId, jobId }) {
-  let engine = await loadModel();
+// ── Main inference loop ───────────────────────────────────────────────────────
+// startIndex / totalParagraphs allow resuming after a GPU recovery recycle.
+// When background.js recreates this document and re-sends remaining paragraphs,
+// startIndex offsets the PARAGRAPH_DONE index so content.js updates the right DOM element.
+
+async function runRewrite({ paragraphs, gradeLevel, tabId, jobId, startIndex = 0, totalParagraphs }) {
+  totalParagraphs = totalParagraphs || paragraphs.length;
+
+  let engine;
+
+  try {
+    engine = await loadModel();
+  } catch (err) {
+    console.error("[offscreen] initial model load failed:", err);
+    chrome.runtime.sendMessage({
+      type: "MODEL_LOAD_PROGRESS",
+      text: "Model failed to load. Please try again.",
+      progress: 0,
+    }).catch(() => {});
+    return;
+  }
 
   for (let i = 0; i < paragraphs.length; i++) {
+    const globalIndex = startIndex + i;
 
     // Check cancellation before each paragraph
     if (await checkCancelled(tabId, jobId)) {
-      console.log(`[offscreen] job ${jobId} for tab ${tabId} was cancelled at paragraph ${i}`);
+      console.log(`[offscreen] job ${jobId} for tab ${tabId} was cancelled at paragraph ${globalIndex}`);
       return;
     }
     const sentences = splitSentences(paragraphs[i]);
@@ -135,22 +151,25 @@ async function runRewrite({ paragraphs, gradeLevel, tabId, jobId }) {
           break;
         } catch (err) {
           if (isDeviceLostError(err) && attempts === 0) {
-            console.warn("[offscreen] GPU device lost, reloading engine...");
+            // ─── GPU DEVICE LOST ────────────────────────────────────────────
+            // The WebGPU context in this offscreen document is permanently
+            // poisoned after a DXGI TDR. We cannot recover here — signal
+            // background.js to destroy this document and create a fresh one,
+            // then resume from the current paragraph.
+            console.warn("[offscreen] GPU device lost — requesting document recycle from background");
             chrome.runtime.sendMessage({
-              type: "MODEL_LOAD_PROGRESS",
-              text: "GPU recovered, resuming...",
-              progress: 0.5,
+              type: "GPU_RECOVERY_NEEDED",
+              remainingParagraphs: paragraphs.slice(i),
+              startIndex: globalIndex,
+              totalParagraphs,
+              gradeLevel,
+              tabId,
+              jobId,
             }).catch(() => {});
-            try {
-              engine = await reloadModel();
-              chrome.runtime.sendMessage({ type: "MODEL_READY" }).catch(() => {});
-            } catch (reloadErr) {
-              console.error("[offscreen] engine reload failed:", reloadErr);
-              break;
-            }
-            attempts++;
+            return; // Stop — background will recycle this document
+            // ────────────────────────────────────────────────────────────────
           } else {
-            console.error(`[offscreen] error p${i} s${s}:`, err);
+            console.error(`[offscreen] error p${globalIndex} s${s}:`, err);
             break;
           }
         }
@@ -166,10 +185,10 @@ async function runRewrite({ paragraphs, gradeLevel, tabId, jobId }) {
     if (kept.length === 0) {
       chrome.runtime.sendMessage({
         type: "PARAGRAPH_DONE",
-        index: i,
+        index: globalIndex,
         rewritten: null,
         skipped: true,
-        total: paragraphs.length,
+        total: totalParagraphs,
         tabId,
       }).catch(() => {});
       continue;
@@ -177,9 +196,9 @@ async function runRewrite({ paragraphs, gradeLevel, tabId, jobId }) {
 
     chrome.runtime.sendMessage({
       type: "PARAGRAPH_DONE",
-      index: i,
+      index: globalIndex,
       rewritten: kept.join(" "),
-      total: paragraphs.length,
+      total: totalParagraphs,
       tabId,
     }).catch(() => {});
   }
@@ -191,12 +210,28 @@ async function runRewrite({ paragraphs, gradeLevel, tabId, jobId }) {
   }).catch(() => {});
 }
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type === "QUERY_MODEL_STATUS") {
+    if (enginePromise) {
+      enginePromise.then(() => {
+        chrome.runtime.sendMessage({ type: "MODEL_READY" }).catch(() => {});
+        sendResponse({ ready: true });
+      }).catch(() => {
+        sendResponse({ ready: false });
+      });
+    } else {
+      sendResponse({ ready: false });
+    }
+    return true; // async sendResponse
+  }
+
   if (message.type !== "REWRITE_ALL_PARAGRAPHS_OFFSCREEN") return;
   enqueueJob({
     paragraphs: message.paragraphs,
     gradeLevel: message.gradeLevel,
     tabId: message.tabId,
     jobId: message.jobId,
+    startIndex: message.startIndex || 0,
+    totalParagraphs: message.totalParagraphs || message.paragraphs.length,
   });
 });
