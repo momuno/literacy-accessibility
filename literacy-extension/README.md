@@ -3,24 +3,23 @@
 <a href="https://youtu.be/GN1AAjfI3Ec"><img src="../media/ReadingExtensionUpdate.png" width="600" align="left"/></a>
 A browser extension that rewrites English Wikipedia articles to your chosen reading level.
 
-Uses an AI model running entirely in your browser. 
-
-No server, no API keys, no data leaves your device.
+Uses an AI model running entirely in your browser. No server, no API keys, no data leaves your device.
 
 And it's free.
+
+> NOTE: Please use parental discretion for age-appropriate material regardless of level selected.
+
 <br>
-<br>
-<br>
+
 **TRY IT OUT :)**
 
 [Download](https://github.com/momuno/literacy-accessibility/releases/latest/download/accessing-literacy-extension.zip) and follow [instructions](#try-it-out) to run below.
 
 <br>
-<br>
 
 **MAKE IT YOUR OWN!**
 
-To customize the extension, go [here](#make-it-your-own) for developer setup and customization ideas.
+To customize the extension, go [here](#make-it-your-own) for dev setup and customization ideas.
 
 <br clear="all"/>
 
