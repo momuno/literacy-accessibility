@@ -1,22 +1,54 @@
-# Accessing Literacy — Chrome Extension
+# Accessing Literacy — Browser Extension
 
-A Chrome extension that rewrites English Wikipedia articles to your chosen reading level using a local AI model. No server, no API keys, no data leaves your device.
+A browser extension that rewrites English Wikipedia articles to your chosen reading level using an AI model running entirely in your browser. No server, no API keys, no data leaves your device.
+
+---
+
+## Try it out
+
+### Requirements
+
+- **Chrome 113+** or **Edge 113+** with WebGPU support
+- A modern GPU (most dedicated and recent integrated GPUs work)
+- ~2.5 GB of free disk space for the AI model (downloads once, then cached)
+
+### Step 1 — Download
+
+[Download accessing-literacy-extension.zip](https://github.com/momuno/literacy-accessibility/releases/latest/download/accessing-literacy-extension.zip) and **unzip** it to a folder on your computer.
+
+### Step 2 — Install in Developer Mode
+
+**Chrome:**
+1. Go to `chrome://extensions`
+2. Turn on **Developer mode** (toggle in the top-right corner)
+3. Click **Load unpacked**
+4. Select the unzipped folder
+
+**Edge:**
+1. Go to `edge://extensions`
+2. Turn on **Developer mode** (toggle in the bottom-left sidebar)
+3. Click **Load unpacked**
+4. Select the unzipped folder
+
+### Step 3 — Use it
+
+1. Navigate to any English Wikipedia article (e.g. [Photosynthesis](https://en.wikipedia.org/wiki/Photosynthesis))
+2. Click the **books icon** in your browser toolbar
+3. Select a reading level (3rd grade through 12th grade)
+4. Click **Apply**
+5. Click **Off** to toggle back to the original text
+
+**First-run note:** The first time you click Apply, the AI model (~2.5 GB) downloads and caches in your browser. This is a one-time wait of a few minutes depending on your connection. After that, everything runs locally with no network calls.
+
+**Cache indicators:** A checkmark next to a grade level in the popup means a cached rewrite exists for that article — it loads instantly.
 
 ---
 
 ## How it works
 
-Click the extension icon on any English Wikipedia page to open a popup. Select a reading level (Kindergarten through High School) and hit Apply. The extension rewrites the article paragraph by paragraph, sentence by sentence, directly in your browser using a locally running language model.
+Click the extension icon on any English Wikipedia page to open a popup. Select a reading level and hit Apply. The extension rewrites the article paragraph by paragraph, sentence by sentence, directly in your browser using a locally running language model (Llama 3.2 3B via [WebLLM](https://webllm.mlc.ai/)).
 
-- ✅ next to a grade level means a cached version exists — loads instantly
-- A spinner means that level is currently being processed
-- The selected radio button reflects what is currently displayed
-
-Clicking **Off / Restore original** brings back the original Wikipedia text. Cached versions persist locally so switching between grade levels is instant after the first run.
-
----
-
-## Architecture
+### Architecture
 
 ```
 Chrome Extension only — no backend, no server, no API keys
@@ -35,9 +67,9 @@ Messages flow through `background.js` — `content.js` and `offscreen.js` never 
 
 ---
 
-## Setup
+## Developer setup
 
-**Step 1 — Install dependencies and build the WebLLM bundle (one time only)**
+If you want to modify the extension and build from source:
 
 ```bash
 cd literacy-extension
@@ -45,19 +77,9 @@ npm install
 npm run build
 ```
 
-This produces `offscreen.bundle.js`. Commit it to your repo so collaborators don't need to repeat this step. Only re-run if you update the WebLLM version.
+This produces `offscreen.bundle.js` (the only file that requires a build step — it bundles the WebLLM dependency). All other files are vanilla JS. You only need to rebuild if you change `offscreen.js` or update the WebLLM version.
 
-**Step 2 — Load the extension in Chrome**
-
-1. Go to `chrome://extensions`
-2. Enable **Developer mode** (top right)
-3. Click **Load unpacked** → select this folder
-4. Navigate to any `https://en.wikipedia.org/wiki/` article
-5. Click the extension icon
-
-**Requirements:** Chrome 113+ with WebGPU support. A modern GPU with at least 4GB VRAM is recommended.
-
-**First run:** The model (~2.5GB) downloads and caches automatically. This takes a few minutes depending on your connection. Subsequent loads are fast.
+Then load the extension folder via Developer Mode as described above.
 
 ---
 
@@ -119,9 +141,9 @@ const paragraphs = Array.from(
 
 ## Known limitations
 
-- English Wikipedia only (expanding to other sites is a planned improvement)
+- English Wikipedia only (expanding to other sites is planned)
 - Only rewrites `<p>` tags — headings and list items are not yet rewritten
-- Requires WebGPU — Chrome 113+, modern GPU
+- Requires WebGPU — Chrome/Edge 113+, modern GPU
 - First model download takes several minutes
 - Long articles may trigger GPU memory pressure on lower-end hardware — the extension handles this by retrying after a GPU reset
 - Page refresh clears the displayed version (cached versions are preserved)
