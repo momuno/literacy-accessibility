@@ -41,6 +41,8 @@ Places to improve? Yep. For one thing, it only works on English Wikipedia. But i
 
 ## Try it
 
+> NOTE: Please use parental discretion for age-appropriate material regardless of level selected.
+
 → **[literacy-extension/README.md](literacy-extension/README.md)** — setup instructions, customization guide, and architecture overview
 
 → **[original-hackathon-v1/README.md](original-hackathon-v1/README.md)** — the original Python + FastAPI + Chrome extension proof of concept
