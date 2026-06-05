@@ -1,7 +1,26 @@
 # Accessing Literacy — Browser Extension
 
-<a href="https://youtu.be/GN1AAjfI3Ec"><img src="media/ReadingExtensionUpdate.png" width="500" align="right"/></a>
-A browser extension that rewrites English Wikipedia articles to your chosen reading level using an AI model running entirely in your browser. No server, no API keys, no data leaves your device.
+<a href="https://youtu.be/GN1AAjfI3Ec"><img src="../media/ReadingExtensionUpdate.png" width="600" align="left"/></a>
+A browser extension that rewrites English Wikipedia articles to your chosen reading level.
+
+Uses an AI model running entirely in your browser. 
+
+No server, no API keys, no data leaves your device.
+
+And it's free.
+<br>
+<br>
+<br>
+**TRY IT OUT :)**
+
+[Download](https://github.com/momuno/literacy-accessibility/releases/latest/download/accessing-literacy-extension.zip) and follow [instructions](#try-it-out) to run below.
+
+<br>
+<br>
+
+**MAKE IT YOUR OWN!**
+
+To customize the extension, go [here](make-it-your-own) for developer setup and customization ideas.
 
 <br clear="all"/>
 
@@ -43,12 +62,12 @@ A browser extension that rewrites English Wikipedia articles to your chosen read
 
 ---
 
-### Requirements
+## Requirements
 
 - **Chrome 113+** or **Edge 113+** with WebGPU support
 - A modern GPU (most dedicated and recent integrated GPUs work)
 - ~2.5 GB of free disk space for the AI model (downloads once, then cached)
-- 
+  
 ## How it works
 
 Click the extension icon on any English Wikipedia page to open a popup. Select a reading level and hit Apply. The extension rewrites the article paragraph by paragraph, sentence by sentence, directly in your browser using a locally running language model (Llama 3.2 3B via [WebLLM](https://webllm.mlc.ai/)).
@@ -72,7 +91,9 @@ Messages flow through `background.js` — `content.js` and `offscreen.js` never 
 
 ---
 
-## Developer setup
+## Make it your own
+
+### Developer setup
 
 If you want to modify the extension and build from source:
 
@@ -86,11 +107,9 @@ This produces `offscreen.bundle.js` (the only file that requires a build step �
 
 Then load the extension folder via Developer Mode as described above.
 
----
+### Customization
 
-## Customization
-
-### Change the model
+#### Change the model
 
 In `offscreen.js`, update the model ID:
 
@@ -109,7 +128,7 @@ Any model from [mlc.ai/models](https://mlc.ai/models) tagged `MLC` works with We
 
 After changing the model, run `npm run build` again.
 
-### Change the prompt
+#### Change the prompt
 
 In `offscreen.js`, update `buildPrompt()`:
 
@@ -123,7 +142,7 @@ function buildPrompt(sentence, gradeLevel) {
 
 The `gradeLevel` variable is passed in from the user's popup selection.
 
-### Adapt for a different website
+#### Adapt for a different website
 
 In `manifest.json`, update the `matches` and `host_permissions` entries:
 
