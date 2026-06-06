@@ -3,9 +3,9 @@
 <a href="https://youtu.be/GN1AAjfI3Ec"><img src="../media/ReadingExtensionUpdate.png" width="600" align="left"/></a>
 A browser extension that rewrites English Wikipedia articles to your chosen reading level.
 
-Uses an AI model running entirely in your browser. No server, no API keys, no data leaves your device.
+Uses an AI model running entirely in your browser. No API keys or subscriptions required.
 
-And it's free.
+It's free.
 
 > NOTE: Please use parental discretion for age-appropriate material regardless of level selected.
 
@@ -55,7 +55,7 @@ To customize the extension, go [here](#make-it-your-own) for dev setup and custo
 5. Click **Apply**
 6. Click **Off** to toggle back to the original text
 
-**First-run note:** The first time you go to a Wikipedia page, the AI model (~2.5 GB) downloads and caches in your browser. This is a one-time wait of a few minutes depending on your connection. After that, everything runs locally with no network calls.
+**First-run note:** The first time you go to a Wikipedia page, the AI model (~2.5 GB) downloads and caches in your browser. This is a one-time wait of a few minutes depending on your connection. After that, the model runs locally.
 
 **Cache indicators:** A checkmark next to a grade level in the popup means a cached rewrite exists for that article — it loads instantly.
 
